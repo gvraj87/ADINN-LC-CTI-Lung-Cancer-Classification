@@ -1,0 +1,8 @@
+# config/config.py
+config = {
+    "learning_rate": 0.0005,
+    "batch_size": 32,
+    "epochs": 20,
+    "num_clusters": 2,
+    "input_shape": (128, 128, 1)
+}
