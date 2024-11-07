@@ -1,0 +1,16 @@
+# segmentation/fuzzy_clustering.py
+from sklearn.cluster import KMeans
+import numpy as np
+import cv2
+
+def fuzzy_clustering(image, num_clusters=2):
+    image = cv2.imread(image, cv2.IMREAD_GRAYSCALE)
+    pixels = image.reshape(-1, 1)
+    kmeans = KMeans(n_clusters=num_clusters, random_state=0).fit(pixels)
+    clustered = kmeans.cluster_centers_[kmeans.labels_]
+    clustered_image = clustered.reshape(image.shape)
+    return clustered_image.astype(np.uint8)
+
+if __name__ == "__main__":
+    segmented_image = fuzzy_clustering("data/processed_image.png")
+    cv2.imwrite("data/segmented_image.png", segmented_image)
