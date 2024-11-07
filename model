@@ -1,0 +1,26 @@
+# model/adinn_model.py
+import tensorflow as tf
+from tensorflow.keras import layers, models, optimizers
+
+def create_adinn_model(input_shape):
+    model = models.Sequential()
+    model.add(layers.Conv2D(32, (3, 3), activation='relu', input_shape=input_shape))
+    model.add(layers.MaxPooling2D((2, 2)))
+    model.add(layers.Conv2D(64, (3, 3), activation='relu'))
+    model.add(layers.MaxPooling2D((2, 2)))
+    model.add(layers.Flatten())
+    model.add(layers.Dense(64, activation='relu'))
+    model.add(layers.Dense(1, activation='sigmoid'))
+    return model
+
+def compile_and_train(model, x_train, y_train, x_val, y_val, learning_rate=0.0005, epochs=20):
+    model.compile(optimizer=optimizers.Adam(learning_rate=learning_rate),
+                  loss='binary_crossentropy',
+                  metrics=['accuracy'])
+    history = model.fit(x_train, y_train, epochs=epochs, validation_data=(x_val, y_val))
+    return history
+
+if __name__ == "__main__":
+    model = create_adinn_model(input_shape=(128, 128, 1))
+    # Load your data into x_train, y_train, x_val, y_val
+    # history = compile_and_train(model, x_train, y_train, x_val, y_val)
