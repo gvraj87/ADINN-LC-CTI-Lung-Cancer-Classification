@@ -1,0 +1,20 @@
+# sample_usage/run_pipeline.py
+from preprocessing.modified_hamilton_filter import modified_hamilton_filter
+from segmentation.fuzzy_clustering import fuzzy_clustering
+from model.adinn_model import create_adinn_model, compile_and_train
+import config.config as cfg
+
+def main(image_path):
+    # Step 1: Preprocess Image
+    processed_image = modified_hamilton_filter(image_path)
+    
+    # Step 2: Segment Image
+    segmented_image = fuzzy_clustering("data/processed_image.png")
+    
+    # Step 3: Train Model (Assuming data preparation)
+    model = create_adinn_model(cfg["input_shape"])
+    # Load your training and validation data here
+    # history = compile_and_train(model, x_train, y_train, x_val, y_val, cfg["learning_rate"], cfg["epochs"])
+
+if __name__ == "__main__":
+    main("path_to_input_image.png")
